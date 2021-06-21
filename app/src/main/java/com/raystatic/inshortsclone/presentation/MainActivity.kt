@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.raystatic.domain.Resource
 import com.raystatic.inshortsclone.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,28 +39,22 @@ class MainActivity : AppCompatActivity() {
 
         subscribeToObservers()
 
+        lifecycleScope.launch {
+            newsAdapter.loadStateFlow.collectLatest {loadState->
+                binding.progress.isVisible = loadState.refresh is LoadState.Loading
+                if (loadState.refresh is LoadState.Error){
+                    Toast.makeText(this@MainActivity, "Error: ${(loadState.refresh as LoadState.Error).error.localizedMessage}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         vm.getTrendingNews("in")
 
     }
 
     private fun subscribeToObservers() {
         vm.news.observe(this, {
-            when (it) {
-                is Resource.Success -> {
-                    binding.progress.isVisible = false
-                    it.data?.let { it1 -> newsAdapter.submitData(it1) }
-                    Toast.makeText(this, "Data loaded", Toast.LENGTH_SHORT).show()
-                }
-
-                is Resource.Error -> {
-                    binding.progress.isVisible = false
-                    Toast.makeText(this, "Error ${it.exception.message}", Toast.LENGTH_SHORT).show()
-                }
-
-                is Resource.Loading -> {
-                    binding.progress.isVisible = true
-                }
-            }
+            newsAdapter.submitData(lifecycle,it)
         })
     }
 }

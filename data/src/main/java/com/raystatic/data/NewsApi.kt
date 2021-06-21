@@ -9,7 +9,8 @@ interface NewsApi {
     @GET("top-headlines")
     suspend fun getTrendingNews(
         @Query("country") country:String,
-        @Query("apiKey") apiKey:String
+        @Query("apiKey") apiKey:String,
+        @Query("page") page:Int
     ):TrendingNewsResponse
 
     companion object{

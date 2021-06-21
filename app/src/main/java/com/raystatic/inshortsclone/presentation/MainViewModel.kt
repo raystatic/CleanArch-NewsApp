@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.raystatic.domain.Resource
 import com.raystatic.domain.model.News
 import com.raystatic.domain.usecase.GetNewsListUseCase
@@ -19,14 +20,13 @@ class MainViewModel @Inject constructor(
     private val getNewsListUseCase: GetNewsListUseCase
 ):ViewModel(){
 
-    private val _news = MutableLiveData<Resource<List<News>>>()
-    val news:LiveData<Resource<List<News>>> get() = _news
+    private val _news = MutableLiveData<PagingData<News>>()
+    val news:LiveData<PagingData<News>> get() = _news
 
     fun getTrendingNews(country:String) = viewModelScope.launch {
         getNewsListUseCase.execute(country)
             .onEach {
                 _news.value = it
-                println("RAYDEBUG: ${it}")
             }
             .launchIn(viewModelScope)
     }
