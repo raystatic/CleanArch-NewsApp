@@ -18,14 +18,14 @@ class NewsAdapter:RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             binding.apply {
                 Glide.with(itemView)
                     .load(news.urlToImage)
-                    .apply(RequestOptions.bitmapTransform(BlurTransformation(25,3)))
+                    .apply(RequestOptions.bitmapTransform(BlurTransformation(25,4)))
                     .into(imageBackground)
                 Glide.with(itemView)
                     .load(news.urlToImage)
                     .into(image)
 
                 tvTitle.text = news.title
-                tvContent.text = news.content ?: news.description
+                tvContent.text =  news.description
                 tvDescription.text = news.description
                 tvSource.text = news.source?.let { "Source $it" }
             }
