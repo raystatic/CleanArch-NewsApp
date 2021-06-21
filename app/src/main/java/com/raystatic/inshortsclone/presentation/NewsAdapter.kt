@@ -13,7 +13,9 @@ import com.raystatic.inshortsclone.R
 import com.raystatic.inshortsclone.databinding.ItemNewsBinding
 import jp.wasabeef.glide.transformations.BlurTransformation
 
-class NewsAdapter:PagingDataAdapter<News,NewsAdapter.NewsViewHolder>(NewsComparator) {
+class NewsAdapter(
+    private val onClick:(News?)->Unit
+):PagingDataAdapter<News,NewsAdapter.NewsViewHolder>(NewsComparator) {
 
     object NewsComparator :DiffUtil.ItemCallback<News>(){
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean =
@@ -27,8 +29,6 @@ class NewsAdapter:PagingDataAdapter<News,NewsAdapter.NewsViewHolder>(NewsCompara
 
     inner class NewsViewHolder(private val binding: ItemNewsBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(news:News?, position:Int){
-
-            println("APIDEBUG: position ${position}")
 
             binding.apply {
 
@@ -49,6 +49,15 @@ class NewsAdapter:PagingDataAdapter<News,NewsAdapter.NewsViewHolder>(NewsCompara
                 tvContent.text =  news?.description
                 tvDescription.text = news?.description
                 tvSource.text = news?.source?.let { "Source $it" }
+
+                tvTitle.setOnClickListener {
+                    onClick(news)
+                }
+
+                viewBottom.setOnClickListener {
+                    onClick(news)
+                }
+
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.raystatic.inshortsclone.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -29,7 +30,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter{news ->
+            val intent = Intent(this,NewsWebActivity::class.java)
+            intent.putExtra("url",news?.url)
+            startActivity(intent)
+        }
 
         binding.newsRv.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)

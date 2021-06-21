@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.raystatic.inshortsclone">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".BaseApplication"
@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InshortsClone">
+        <activity android:name=".presentation.NewsWebActivity"></activity>
         <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
