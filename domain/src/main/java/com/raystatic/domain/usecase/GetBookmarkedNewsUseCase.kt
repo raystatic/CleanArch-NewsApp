@@ -11,7 +11,7 @@ class GetBookmarkedNewsUseCase @Inject constructor(
     private val repository: BookmarkedRepository
 ) {
 
-    suspend fun getBookmarkedNews():Flow<Resource<List<News>>>{
+    suspend fun execute():Flow<List<News>>{
         return repository.getBookmarkedNews()
     }
 

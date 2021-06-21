@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.raystatic.inshortsclone.presentation.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_bookmarkedFragment"
+            app:destination="@id/bookmarkedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="com.raystatic.inshortsclone.presentation.newsdetail.NewsDetailFragment"
+        android:label="NewsDetailFragment" />
+    <fragment
+        android:id="@+id/bookmarkedFragment"
+        android:name="com.raystatic.inshortsclone.presentation.bookmarked.BookmarkedFragment"
+        android:label="BookmarkedFragment" >
+        <action
+            android:id="@+id/action_bookmarkedFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment" />
+    </fragment>
+</navigation>

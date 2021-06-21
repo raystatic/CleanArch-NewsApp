@@ -1,9 +1,8 @@
-package com.raystatic.inshortsclone.presentation
+package com.raystatic.inshortsclone.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,8 +13,10 @@ import com.raystatic.inshortsclone.databinding.ItemNewsBinding
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 class NewsAdapter(
-    private val onClick:(News?)->Unit
-):PagingDataAdapter<News,NewsAdapter.NewsViewHolder>(NewsComparator) {
+    private val onClick:(News?)->Unit,
+    private val onBookmarkedClick:(News?) -> Unit,
+    private val onShare:(News?) -> Unit
+):PagingDataAdapter<News, NewsAdapter.NewsViewHolder>(NewsComparator) {
 
     object NewsComparator :DiffUtil.ItemCallback<News>(){
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean =
@@ -50,12 +51,26 @@ class NewsAdapter(
                 tvDescription.text = news?.description
                 tvSource.text = news?.source?.let { "Source $it" }
 
+                val bookmarkResource = if (news?.isBookmarked == true) R.drawable.ic_bookmark_active else R.drawable.ic_bookmark_inactive
+
+                Glide.with(itemView)
+                    .load(bookmarkResource)
+                    .into(imageBookmark)
+
                 tvTitle.setOnClickListener {
                     onClick(news)
                 }
 
                 viewBottom.setOnClickListener {
                     onClick(news)
+                }
+
+                imageBookmark.setOnClickListener {
+                    onBookmarkedClick(news)
+                }
+
+                imageShare.setOnClickListener {
+                     onShare(news)
                 }
 
             }

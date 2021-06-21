@@ -12,9 +12,7 @@ import com.raystatic.domain.Resource
 import com.raystatic.domain.model.News
 import com.raystatic.domain.repository.BookmarkedRepository
 import com.raystatic.domain.repository.NewsRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import java.lang.Exception
 
 class BookmarkedNewsRepositoryImpl(
@@ -22,18 +20,20 @@ class BookmarkedNewsRepositoryImpl(
     private val bookmarkedNewsMapper: BookmarkedNewsMapper
 ):BookmarkedRepository{
 
-    override suspend fun getBookmarkedNews(): Flow<Resource<List<News>>> {
-        return flow {
-            emit(Resource.Loading)
-            try {
-                localDataSource.getBookmarkedNews()
-                    .collectLatest {
-                        val result = bookmarkedNewsMapper.mapToNewsList(it)
-                        emit(Resource.Success(result))
-                    }
-            }catch (e:Exception){
-                emit(Resource.Error(e))
-            }
-        }
+    override suspend fun getBookmarkedNews(): Flow<List<News>> {
+        return localDataSource.getBookmarkedNews().map { bookmarkedNewsMapper.mapToNewsList(it) }
+    }
+
+    override suspend fun insertBookmarkedNews(news: News) {
+        val bookmarkedNews = bookmarkedNewsMapper.mapToBookmarkedNews(news)
+        localDataSource.insertBookmarkedDao(bookmarkedNews)
+    }
+
+    override suspend fun deleteBookmarkedNewsByTitle(title: String) {
+        localDataSource.deleteBookmarkedByTitle(title)
+    }
+
+    override suspend fun deleteAllBookmarks() {
+        localDataSource.deleteAllBookmarked()
     }
 }

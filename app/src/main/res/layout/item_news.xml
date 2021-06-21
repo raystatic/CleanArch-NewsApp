@@ -33,19 +33,40 @@
         android:id="@+id/viewTop"
         android:background="@color/white"/>
 
+    <ImageView
+        android:id="@+id/imageBookmark"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_bookmark_inactive"
+        app:layout_constraintEnd_toEndOf="@+id/viewTop"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <ImageView
+        android:id="@+id/imageShare"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_share_24"
+        app:layout_constraintEnd_toStartOf="@+id/imageBookmark"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"/>
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/viewTop"
+        app:layout_constraintTop_toBottomOf="@+id/imageBookmark"
         app:layout_constraintStart_toStartOf="@+id/viewTop"
         app:layout_constraintEnd_toEndOf="@+id/viewTop"
         android:text="Coronavirus News LIVE Updates: India Sees 53,256 New Cases in 24 Hours, Lowest in 88 Days; Weekly Positivity Rate Below 5% - News18"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:id="@+id/tvTitle"/>
+        android:id="@+id/tvTitle"
+        />
 
     <TextView
         android:layout_width="0dp"
