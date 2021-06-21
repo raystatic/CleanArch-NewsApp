@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.raystatic.domain.model.News
+import com.raystatic.inshortsclone.R
 import com.raystatic.inshortsclone.databinding.ItemNewsBinding
 import jp.wasabeef.glide.transformations.BlurTransformation
 
@@ -30,13 +31,19 @@ class NewsAdapter:PagingDataAdapter<News,NewsAdapter.NewsViewHolder>(NewsCompara
             println("APIDEBUG: position ${position}")
 
             binding.apply {
+
                 Glide.with(itemView)
                     .load(news?.urlToImage)
+                    .placeholder(R.drawable.image_placeholder)
+                    .into(image)
+
+                Glide.with(itemView)
+                    .load(news?.urlToImage)
+                    .placeholder(R.drawable.image_placeholder)
                     .apply(RequestOptions.bitmapTransform(BlurTransformation(25,4)))
                     .into(imageBackground)
-                Glide.with(itemView)
-                    .load(news?.urlToImage)
-                    .into(image)
+
+
 
                 tvTitle.text = news?.title
                 tvContent.text =  news?.description
