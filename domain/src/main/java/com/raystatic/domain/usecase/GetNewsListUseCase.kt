@@ -11,7 +11,8 @@ class GetNewsListUseCase @Inject constructor(
 ) {
 
     suspend fun execute(country:String):Flow<Resource<List<News>>>{
-        return repository.getNewsList(country)
+        val result =  repository.getNewsList(country)
+        return result
     }
 
 }

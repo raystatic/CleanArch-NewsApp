@@ -69,4 +69,7 @@ dependencies {
 
     // Activity KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.2.3"
+
+    //glide transformations
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
 }

@@ -20,8 +20,10 @@ class NewsRepositoryImpl(
             try {
                 val response =remoteDataSource.getTrendingNews(country)
                 val result = newsMapper.mapToNewsList(response.articles)
+                println("RAYDEBUG: this is called. $result")
                 emit(Resource.Success(result))
             }catch (e:Exception){
+                e.printStackTrace()
                 Resource.Error(e)
             }
         }

@@ -2,7 +2,7 @@ package com.raystatic.data.response
 
 data class Article(
     val author: String?=null,
-    val content: String,
+    val content: String?=null,
     val description: String?=null,
     val publishedAt: String,
     val source: Source?=null,
