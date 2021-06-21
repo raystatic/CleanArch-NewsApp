@@ -9,7 +9,6 @@ class RemoteDataSource @Inject constructor(
 ) {
 
     suspend fun getTrendingNews(country:String, page:Int):TrendingNewsResponse{
-        println("APIDEBUG: ${page}")
         return newsApi.getTrendingNews(country = country,apiKey = NewsApi.API_KEY, page = page)
     }
 
