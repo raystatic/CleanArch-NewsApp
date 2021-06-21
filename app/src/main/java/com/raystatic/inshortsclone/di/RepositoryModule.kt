@@ -21,8 +21,13 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(remoteDataSource: RemoteDataSource, mapper: NewsMapper): NewsRepository {
-        return NewsRepositoryImpl(remoteDataSource, mapper)
+    fun provideNewsRepository(
+        remoteDataSource: RemoteDataSource,
+        mapper: NewsMapper,
+        localDataSource: LocalDataSource,
+        bookmarkedNewsMapper: BookmarkedNewsMapper
+    ): NewsRepository {
+        return NewsRepositoryImpl(remoteDataSource, localDataSource, mapper, bookmarkedNewsMapper)
     }
 
     @Provides

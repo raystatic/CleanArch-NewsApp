@@ -19,7 +19,8 @@ class NewsMapper @Inject constructor() {
             url = article.url,
             urlToImage = article.urlToImage,
             publishedAt = article.publishedAt,
-            content = article.content
+            content = article.content,
+            isBookmarked = article.isBookmarked
         )
     }
 

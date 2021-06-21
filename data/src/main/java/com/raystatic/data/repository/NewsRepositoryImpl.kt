@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.raystatic.data.datasource.LocalDataSource
 import com.raystatic.data.datasource.RemoteDataSource
+import com.raystatic.data.mapper.BookmarkedNewsMapper
 import com.raystatic.data.mapper.NewsMapper
 import com.raystatic.data.pagingsource.TrendingNewsPagingSource
 import com.raystatic.domain.Resource
@@ -16,7 +17,9 @@ import kotlinx.coroutines.flow.flow
 
 class NewsRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
-    private val newsMapper: NewsMapper
+    private val localDataSource: LocalDataSource,
+    private val newsMapper: NewsMapper,
+    private val bookmarkedNewsMapper: BookmarkedNewsMapper
 ):NewsRepository{
 
     override suspend fun getNewsList(country: String): Flow<PagingData<News>> {
@@ -27,7 +30,7 @@ class NewsRepositoryImpl(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                TrendingNewsPagingSource(remoteDataSource, country,newsMapper)
+                TrendingNewsPagingSource(remoteDataSource, country,newsMapper,localDataSource, bookmarkedNewsMapper)
             }
         ).flow
     }

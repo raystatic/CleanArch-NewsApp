@@ -14,7 +14,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 
 class NewsAdapter(
     private val onClick:(News?)->Unit,
-    private val onBookmarkedClick:(News?) -> Unit,
+    private val onBookmarkedClick:(News?,Boolean) -> Unit,
     private val onShare:(News?) -> Unit
 ):PagingDataAdapter<News, NewsAdapter.NewsViewHolder>(NewsComparator) {
 
@@ -66,7 +66,9 @@ class NewsAdapter(
                 }
 
                 imageBookmark.setOnClickListener {
-                    onBookmarkedClick(news)
+                    news?.isBookmarked = !news?.isBookmarked!!
+                    onBookmarkedClick(news, news.isBookmarked)
+                    notifyItemChanged(position)
                 }
 
                 imageShare.setOnClickListener {

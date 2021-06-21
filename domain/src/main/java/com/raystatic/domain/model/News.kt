@@ -9,5 +9,5 @@ data class News(
     val urlToImage:String?=null,
     val publishedAt:String,
     val content:String?=null,
-    val isBookmarked:Boolean?=false
+    var isBookmarked:Boolean=false
 )

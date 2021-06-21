@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.raystatic.domain.Resource
 import com.raystatic.inshortsclone.R
 import com.raystatic.inshortsclone.Utils
@@ -54,6 +55,7 @@ class BookmarkedFragment: Fragment(R.layout.fragment_bookmarked) {
         binding.newsRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = bookmarkedNewsAdapter
+            PagerSnapHelper().attachToRecyclerView(this)
         }
 
         binding.imagBack.setOnClickListener {
@@ -86,6 +88,10 @@ class BookmarkedFragment: Fragment(R.layout.fragment_bookmarked) {
             }
 
         }
+
+        val dialog = alertDialog.create()
+        dialog.show()
+
     }
 
     private fun subscribeToObservers() {

@@ -36,6 +36,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         _binding = FragmentHomeBinding.bind(view)
 
+        binding.tvToday.text = Utils.getToday()
+
         newsAdapter = NewsAdapter(
             onClick = {news->
                 val bundle = bundleOf(
@@ -43,10 +45,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 )
                 findNavController().navigate(R.id.action_homeFragment_to_newsDetailFragment,bundle)
             },
-            onBookmarkedClick = {news->
+            onBookmarkedClick = {news,isBookmarked->
                 news?.let {
-                    if (it.isBookmarked == true) vm.removeBookmark(it.title)
-                    else vm.addNewsToBookmark(it)
+                    if (isBookmarked) vm.addNewsToBookmark(it)
+                    else vm.removeBookmark(it.title)
                 }
             },
             onShare = {news->
